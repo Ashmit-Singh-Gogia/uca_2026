@@ -1,50 +1,33 @@
 #include <stdio.h>
+#include <string.h>
 
 int find_substring(const char *haystack, const char *needle) {
+  int n1 = strlen(haystack), n2 = strlen(needle);
   int i = 0, j = 0;
-
-  if (needle[0] == '\0') {
-    return 0;
-  }
-
-  while (haystack[i] != '\0') {
-    j = 0;
-    while (needle[j] != '\0' && haystack[i + j] == needle[j]) {
+  int startIndex = -1;
+  while (i < n1 - 1 && j < n2 - 1) {
+    char c1 = haystack[i], c2 = needle[j];
+    if (c1 == c2) {
+      if (startIndex == -1) {
+        startIndex = i;
+      }
       j++;
-    }
-    if (needle[j] == '\0') {
-      return i;
+    } else {
+      j = 0;
+      startIndex = -1;
     }
     i++;
   }
-
-  return -1;
+  return startIndex;
 }
 
 int main() {
   char haystack[256];
   char needle[256];
-  int i;
-
+  printf("Enter the haystack string\n");
   fgets(haystack, 256, stdin);
-  i = 0;
-  while (haystack[i] != '\0') {
-    if (haystack[i] == '\n') {
-      haystack[i] = '\0';
-      break;
-    }
-    i++;
-  }
-
+  printf("Enter the needle string\n");
   fgets(needle, 256, stdin);
-  i = 0;
-  while (needle[i] != '\0') {
-    if (needle[i] == '\n') {
-      needle[i] = '\0';
-      break;
-    }
-    i++;
-  }
 
   printf("%d\n", find_substring(haystack, needle));
 

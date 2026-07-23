@@ -1,20 +1,17 @@
 #include <stdio.h>
+#include <string.h>
 
 #define MAX_SIZE 256
 
 int main() {
-  char input[MAX_SIZE];
-
-  if (fgets(input, MAX_SIZE, stdin) != NULL) {
-    for (int i = 0; input[i] != '\0'; i++) {
-      if (input[i] == ',') {
-        putchar('\n');
-      } else if (input[i] != '\n' && input[i] != '\r') {
-        putchar(input[i]);
-      }
-    }
-    putchar('\n');
+  // using strtok()
+  char input[256];
+  fgets(input, 256, stdin);
+  char separators[] = ",";
+  char *token = strtok(input, separators);
+  while (token != NULL) {
+    printf("%s\n", token);
+    token = strtok(NULL, separators); // pass null here so old string is taken
   }
-
   return 0;
 }

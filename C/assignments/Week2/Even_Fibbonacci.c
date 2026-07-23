@@ -1,52 +1,32 @@
 #include <stdio.h>
 
 long long sumEvenFibBruteForce(long long n) {
-  if (n < 2)
-    return 0;
-
-  long long a = 1;
-  long long b = 1;
-  long long sum = 0;
-
-  while (1) {
-    long long next = a + b;
-
-    if (next > n) {
-      break;
-    }
-
-    if (next % 2 == 0) {
-      sum += next;
-    }
-
+  long long a = 0, b = 1, c = 1;
+  long long ans = 0;
+  while (c < n) {
     a = b;
-    b = next;
+    b = c;
+    c = a + b;
+    if (c % 2 == 0) {
+      ans += c;
+    }
   }
-
-  return sum;
+  return ans;
 }
 
 long long sumEvenFibOptimized(long long n) {
+  // Formula we can derive is Fk = 4 * Fk-3 + Fk-6
   if (n < 2)
     return 0;
-
-  long long prev_even = 0;
-  long long curr_even = 2;
-  long long sum = prev_even + curr_even;
-
-  while (1) {
-    long long next_even = 4 * curr_even + prev_even;
-
-    if (next_even > n) {
-      break;
-    }
-
-    sum += next_even;
-
-    prev_even = curr_even;
-    curr_even = next_even;
+  long long prevEven = 0; // this is f(k-6)
+  long long currEven = 2; // this is f(k-3)
+  long long sum = 0;
+  while (currEven <= n) {
+    sum += currEven;
+    long long nextEven = 4 * currEven + prevEven; // nextEven represents Fk
+    prevEven = currEven;
+    currEven = nextEven;
   }
-
   return sum;
 }
 
