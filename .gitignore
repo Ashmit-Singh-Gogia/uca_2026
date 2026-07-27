@@ -1,3 +1,13 @@
+#  To ignore all the files with no dot
+# Step 1: Match all files and folders
+*
+
+# Step 2: Ensure directories are not ignored so Git can read inside them
+!*/
+
+# Step 3: Ensure files with dots (extensions or dotfiles) are not ignored
+!*.*
+
 *Cout
 .DS_Store
 *class
